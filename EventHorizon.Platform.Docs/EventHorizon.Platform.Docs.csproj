@@ -3,5 +3,16 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages\Docs\2D\" />
+      <Folder Include="Pages\Docs\Agents\BehaviorTree\" />
+      <Folder Include="Pages\Docs\Graphics\" />
+      <Folder Include="Pages\Docs\Assets\" />
+      <Folder Include="Pages\Docs\ClientEntities\" />
+      <Folder Include="Pages\Docs\Map\" />
+      <Folder Include="Pages\Docs\GUI\" />
+      <Folder Include="Pages\Docs\Scripting\" />
+    </ItemGroup>
     
 </Project>

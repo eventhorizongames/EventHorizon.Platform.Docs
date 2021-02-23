@@ -48,7 +48,7 @@
             return _nav;
         }
 
-        private ConcurrentDictionary<string, PageMetadataModel> GenerateListOfPageMetadata(
+        private static ConcurrentDictionary<string, PageMetadataModel> GenerateListOfPageMetadata(
             IWebHostEnvironment env
         )
         {
@@ -67,14 +67,13 @@
 
             var pageList = new Dictionary<string, PageMetadataModel>();
             var pageFileNameList = new List<string>();
-            // Get All Classes
+            // Get All Pages
             var pageMetadataList = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.DefinedTypes)
                 .Where(type => typeof(PageMetadata).IsAssignableFrom(type));
 
             foreach (var typeInfo in pageMetadataList)
             {
-
                 if (Attribute.IsDefined(
                     typeInfo,
                     typeof(PageAttribute),
@@ -104,7 +103,7 @@
                     ))
                     {
                         var pageMetadataAttribute = typeInfo.GetCustomAttribute<PageMetadataAttribute>();
-                        model.Title = pageMetadataAttribute.Title;
+                        model.Title = pageMetadataAttribute?.Title ?? string.Empty;
                     }
 
                     // If has the Json Metadata File override the existing Model Properties
@@ -115,9 +114,15 @@
                         var fileFullName = jsonFilePathList.First(
                             a => a.EndsWith(metadataFileName)
                         );
-                        model = JsonSerializer.Deserialize<PageMetadataModel>(
+                        var jsonModel = JsonSerializer.Deserialize<PageMetadataModel>(
                             File.ReadAllText(fileFullName)
                         );
+                        if (jsonModel == null)
+                        {
+                            throw new SystemException(
+                                $"Page Metadata File was not valid JSON: {metadataFileName}"
+                            );
+                        }
                     }
                     model.Route = routeAttribute.Template;
 
@@ -133,7 +138,7 @@
             );
         }
 
-        private PageNavigation BuildPageNavigation(
+        private static PageNavigation BuildPageNavigation(
             IDictionary<string, PageMetadataModel> pageList
         )
         {
@@ -154,11 +159,16 @@
                     path
                 );
             }
+            root.ChildrenAsList = root.ChildrenAsList?.OrderBy(
+                a => a.Title
+            )?.OrderBy(
+                a => a.ChildrenAsList != null
+            )?.ToList() ?? new List<PageNavigationModel>();
 
             return root;
         }
 
-        private void AddNavigationModelToNode(
+        private static void AddNavigationModelToNode(
             IDictionary<string, PageMetadataModel> pageList,
             PageNavigationModel root,
             string path
@@ -185,9 +195,9 @@
                 ).IsFolder)
                 {
                     // Set newParent to already existing 
-                    newParent = parent.Children.First(
+                    newParent = (PageNavigationModel)parent.Children.First(
                         a => a.Id == newParentPath
-                    ) as PageNavigationModel;
+                    );
                 }
                 else if (parent.Children.Any(
                     a => a.Id == newParentPath
@@ -197,9 +207,9 @@
                 {
                     // Update Parent Node to Parent Folder
                     // And add Node to Folder
-                    newParent = parent.Children.First(
+                    newParent = (PageNavigationModel)parent.Children.First(
                         a => a.Id == newParentPath
-                    ) as PageNavigationModel;
+                    );
                     var newParentAsNode = new PageNavigationModel
                     {
                         Id = newParent.Id,
@@ -228,6 +238,11 @@
                 }
 
                 parent = newParent;
+                parent.ChildrenAsList = parent.ChildrenAsList?.OrderBy(
+                    a => a.Title
+                )?.OrderBy(
+                    a => a.ChildrenAsList != null
+                )?.ToList() ?? new List<PageNavigationModel>();
             }
 
             parent.ChildrenAsList.Add(
@@ -241,6 +256,11 @@
                     Route = path,
                 }
             );
+            parent.ChildrenAsList = parent.ChildrenAsList?.OrderBy(
+                a => a.Title
+            )?.OrderBy(
+                a => a.ChildrenAsList != null
+            )?.ToList() ?? new List<PageNavigationModel>();
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@page "/account/management"
+@attribute [Page]
+@attribute [PageMetadata(Title = "Management")]
+@inherits PageMetadataBase
+
+<h1>@Localizer["Account Management"]</h1>
+
+<p>
+    @Localizer["On the Account Management page you will have access to do the following:"]
+    <ul>
+        <li>
+            @Localizer["Edit your profile"]
+        </li>
+        <li>
+            @Localizer["Change your password"]
+        </li>
+        <li>
+            @Localizer["Enable/Disable your Two-Factor Authentication"]
+        </li>
+        <li>
+            @Localizer["View your grants to external clients"]
+        </li>
+        <li>
+            @Localizer["Purge your account, removing you from the platform."]
+        </li>
+    </ul>
+</p>
+
+<h2>
+    @Localizer["Profile Management"]
+</h2>
+
+<p>
+    @Localizer["Here you can editor your profile that is provided to your consented clients."]
+</p>
+
+<h2>
+    @Localizer["Password Management"]
+</h2>
+
+<p>
+    @Localizer["Under password managememnt you have to supply your current password and your desired new password. The password requirements are the same as when you Registered your account."]
+</p>

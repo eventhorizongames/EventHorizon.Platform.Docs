@@ -52,7 +52,24 @@ I have included a docker image, that can be used to package up the generated doc
 docker build -t <docker-org>/docs:latest .
 ~~~
 
-# Future Work
+# Push Docker Image to Registry
 
-[] Look at adding support for JSON files in a Wasm deployment. 
-- Look at embedding the JSON into the DLL and loading from there.
+~~~ bash
+docker push <docker-org>/docs:latest
+~~~
+
+# Generate Static Pre-Rendered Output Files
+
+This process uses the Static.PreRenderer project to spin up an InMemory Host of the Server Project, that that then goes through all the registered Routes generating a base, a gzipped compressed and a brotli compressed version of the page into the output/wwwroot folder.
+
+~~~ bash
+# Using sh you can generate the files
+sh prerender-site.sh
+~~~
+
+~~~ powershell
+# Using Powershell you can generate the files
+./build.ps1
+~~~
+
+Inspiration for the Pre-Rendering was from the blog of Andrew Lock. The post most of the Pre-Renderer was derived from is here https://andrewlock.net/enabling-prerendering-for-blazor-webassembly-apps/

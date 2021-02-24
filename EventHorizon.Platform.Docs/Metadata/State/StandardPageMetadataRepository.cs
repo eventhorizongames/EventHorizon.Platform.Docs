@@ -3,15 +3,12 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Text.Json;
     using EventHorizon.Platform.Docs.Metadata.Api;
     using EventHorizon.Platform.Docs.Metadata.Attributes;
     using EventHorizon.Platform.Docs.Metadata.Model;
     using Microsoft.AspNetCore.Components;
-    using Microsoft.AspNetCore.Hosting;
 
     public class StandardPageMetadataRepository
         : PageMetadataRepository
@@ -20,11 +17,11 @@
         private readonly PageNavigation _nav;
 
         public StandardPageMetadataRepository(
-            IWebHostEnvironment env
+            PageMetadataSettings settings
         )
         {
             _map = GenerateListOfPageMetadata(
-                env
+                settings
             );
             _nav = BuildPageNavigation(
                 _map
@@ -49,26 +46,13 @@
         }
 
         private static ConcurrentDictionary<string, PageMetadataModel> GenerateListOfPageMetadata(
-            IWebHostEnvironment env
+            PageMetadataSettings settings
         )
         {
-            var jsonFilePathList = Directory.GetFiles(
-                Path.Combine(
-                    env.ContentRootPath,
-                    "Pages"
-                ),
-                "*.json",
-                new EnumerationOptions
-                {
-                    RecurseSubdirectories = true,
-                }
-            );
-
-
             var pageList = new Dictionary<string, PageMetadataModel>();
             var pageFileNameList = new List<string>();
             // Get All Pages
-            var pageMetadataList = AppDomain.CurrentDomain.GetAssemblies()
+            var pageMetadataList = settings.PageAssemblyList
                 .SelectMany(x => x.DefinedTypes)
                 .Where(type => typeof(PageMetadata).IsAssignableFrom(type));
 
@@ -106,24 +90,6 @@
                         model.Title = pageMetadataAttribute?.Title ?? string.Empty;
                     }
 
-                    // If has the Json Metadata File override the existing Model Properties
-                    if (jsonFilePathList.Any(
-                        a => a.EndsWith(metadataFileName)
-                    ))
-                    {
-                        var fileFullName = jsonFilePathList.First(
-                            a => a.EndsWith(metadataFileName)
-                        );
-                        var jsonModel = JsonSerializer.Deserialize<PageMetadataModel>(
-                            File.ReadAllText(fileFullName)
-                        );
-                        if (jsonModel == null)
-                        {
-                            throw new SystemException(
-                                $"Page Metadata File was not valid JSON: {metadataFileName}"
-                            );
-                        }
-                    }
                     model.Route = routeAttribute.Template;
 
                     pageList.Add(

@@ -1,41 +1,99 @@
-# EventHorizon Platform Docs
+# EventHorizon Games Studio Website
 
-# About 
+## About
 
-This project contains the Platform Documentation for Game Development Platform available from https://ehzgames.studio.
+This project is built on Blazor, with a focus on quick page creation.
 
-# Project Structure Details
+## Features
 
-On application startup the Side Navigation is created based on annotated pages, and will nest '/' routes/path parameters under "folder" creating a compact tree structure. 
+- Sidebar that will auto update based on razor annotated with the [PageAttribute] Attribute.
+- Static Site Generation for Blazor Wasm
+- Localization Built-In
+- Utility Components Available for Markdown and general debugging display.
 
-The folders, pulled from the route, include Resource Keys added to SharedResource.resx that will also localize.
+## Support
 
-# Creating a Docker Image
+This project supports Blazor Server, Wasm, and Static Site Wasm deployments.
 
-I have included a docker image, that can be used to package up the generated docs site for easy usage in just about any enjoinment.
+## Usage
 
-~~~ bash
+The the only required step is to create a razor file with a [Page] attribute and inherit from the PageMetadataBase class.
+
+## Metadata
+
+Including [Page] attribute, set meta information about the page.
+
+### Supported Metadata
+
+| Property | Description                                     |
+| -------- | ----------------------------------------------- |
+| Title    | Used for display purposes outside of this page. |
+
+## Example Razor File
+
+### CreateAMap.razor
+
+```html
+@page "/tutorials/create-a-map" 
+@attribute [Page(Title = "Create a Map")]
+@inherits PageMetadataBase
+
+<h1>@Localizer["Create a Map"]</h1>
+
+<p>@Localizer["Tutorial on how to create a map..."]</p>
+```
+
+## Application Details
+
+This project created a Side Navigation based on the routes of the pages, so it will nest the routes under "folder" creating a compact tree structure.
+
+The folders, pulled from the route, will require Resource Keys to be added to the SharedResource.resx to correctly localize.
+
+## Deployment Scenarios
+
+You can clone this project and run the solution, checkout the GettingStarted.razor and CreateAMap.razor for examples of how the pages are structured. Any pages, correctly attributed, in the Pages directory should be supported.
+
+## Creating a Blazor Server Hosted Docker Image
+
+I have included a Dockerfile, that can be used to package up the generated docs site for easy usage in just about any environment.
+
+```bash
 docker build -t <docker-org>/docs:latest .
-~~~
+```
 
-# Push Docker Image to Registry
+## Push a Built Docker Image to the Docker Hub Registry
 
-~~~ bash
+```bash
 docker push <docker-org>/docs:latest
-~~~
+```
 
-# Generate Static Pre-Rendered Output Files
+## Generate Static Pre-Rendered Output Files
 
 This process uses the Static.PreRenderer project to spin up an InMemory Host of the Server Project, that that then goes through all the registered Routes generating a base, a gzipped compressed and a brotli compressed version of the page into the output/wwwroot folder.
 
-~~~ bash
-# Using sh you can generate the files
-sh prerender-site.sh
-~~~
+After running the command you can find the generate source in the ./output/wwwroot folder, you can then take that generated source and publish it into any static host provider.
 
-~~~ powershell
-# Using Powershell you can generate the files
-./build.ps1
-~~~
+```bash
+# Linux: Using sh you can generate the files
+sh publish.sh
+```
 
-Inspiration for the Pre-Rendering was from the blog of Andrew Lock. The post most of the Pre-Renderer was derived from is here https://andrewlock.net/enabling-prerendering-for-blazor-webassembly-apps/
+```powershell
+# Windows: Using Powershell you can generate the files
+./publish.ps1
+```
+
+```bash
+# Use the dotnet serve tool to host a static version of the site
+dotnet serve -d "./output/wwwroot"
+```
+
+```bash
+# Install .NET Serve
+dotnet tool install --global dotnet-serve
+
+# Install wasm-tools workload
+dotnet workload install wasm-tools
+```
+
+Inspiration for the Pre-Rendering was from the blog of Andrew Lock. The post most of the Pre-Renderer was derived from is here <https://andrewlock.net/enabling-prerendering-for-blazor-webassembly-apps/>

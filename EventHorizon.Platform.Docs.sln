@@ -3,24 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHorizon.Platform.Docs", "EventHorizon.Platform.Docs\EventHorizon.Platform.Docs.csproj", "{715B8588-1CBD-4917-9260-B453006BA269}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EBA60231-F21E-4207-A721-00AAA4B64317}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		Dockerfile = Dockerfile
-		README.md = README.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "Website\Website.csproj", "{715B8588-1CBD-4917-9260-B453006BA269}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Static.PreRenderer", "Static.PreRenderer\Static.PreRenderer.csproj", "{E5FA902A-80A0-4DD7-AE52-AAE2B0D426C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHorizon.Platform.Docs.Server", "EventHorizon.Platform.Docs.Server\EventHorizon.Platform.Docs.Server.csproj", "{E42DAEE5-B793-4299-AF30-5C58F6928DE4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{8361284D-FE25-4056-B082-F4FBC03ABF08}"
-	ProjectSection(SolutionItems) = preProject
-		build.ps1 = build.ps1
-		prerender-site.sh = prerender-site.sh
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{E42DAEE5-B793-4299-AF30-5C58F6928DE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,9 +30,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8361284D-FE25-4056-B082-F4FBC03ABF08} = {EBA60231-F21E-4207-A721-00AAA4B64317}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9E23C52-94E2-4859-BDBE-725BF845CB61}

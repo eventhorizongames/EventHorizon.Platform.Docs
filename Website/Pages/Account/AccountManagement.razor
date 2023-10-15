@@ -1,0 +1,87 @@
+﻿@page "/account/management"
+@attribute [Page(Title = "Management")]
+@inherits PageMetadataBase
+
+<h1>@Localizer["Account Management"]</h1>
+
+<p>
+    @Localizer["On the Account Management page you will have access to do the following:"]
+
+    <ul>
+        <li>
+            <AnchorLink href="#profile">
+                @Localizer["Profile"]
+            </AnchorLink>
+        </li>
+        <li>
+            <AnchorLink href="#password">
+                @Localizer["Password"]
+            </AnchorLink>
+        </li>
+        <li>
+            <AnchorLink href="#2fa">
+                @Localizer["Two-Factor Authentication"]
+            </AnchorLink>
+        </li>
+        <li>
+            <AnchorLink href="#grants">
+                @Localizer["Grants"]
+            </AnchorLink>
+        </li>
+        <li>
+            <AnchorLink href="#purge-account">
+                @Localizer["Purge Account"]
+            </AnchorLink>
+        </li>
+    </ul>
+</p>
+
+<div id="profile">
+    <h2>
+        @Localizer["Profile"]
+    </h2>
+
+    <p>
+        @Localizer["You can editor your profile that is provided to your granted clients."]
+    </p>
+</div>
+
+<div id="password">
+    <h2>
+        @Localizer["Password"]
+    </h2>
+
+    <p>
+        @Localizer["Under Change Password you have to supply your current password and your desired new password. The password requirements are the same as when you Registered your account."]
+    </p>
+</div>
+
+<div id="2fa">
+    <h2>
+        @Localizer["Two-Factor Authentication"]
+    </h2>
+
+    <p>
+        @Localizer["This section allows for you to setup 2FA, gives you a QR code that can then be used to enable 2FA form you Mobile Device. More instruction's provided on the page."]
+    </p>
+</div>
+
+<div id="grants">
+    <h2>
+        @Localizer["Grants"]
+    </h2>
+
+    <p>
+        @Localizer["This is a list of your application you have given concent to your Identity information, you can also 'Revoke Access' for a Client from this screen."]
+    </p>
+</div>
+
+<div id="purge-account" name="purge-account">
+    <h2>
+        @Localizer["Purge Account"]
+    </h2>
+
+    <p>
+        @Localizer["Here you can remove your account and all of your data from the Platform, this cannot be undone once Confirmed."]
+    </p>
+</div>

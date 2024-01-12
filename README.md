@@ -85,7 +85,7 @@ sh publish.sh
 
 ```bash
 # Use the dotnet serve tool to host a static version of the site
-dotnet serve -d "./output/wwwroot"
+dotnet serve -d="./output/wwwroot"
 ```
 
 ```bash

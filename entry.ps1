@@ -9,7 +9,8 @@ param(
         "format",
         "check",
         "test",
-        "publish"
+        "publish",
+        "serve"
     )]
     $Command,
     [string] $PactUrl,
@@ -47,6 +48,10 @@ switch ($Command) {
     }
     "publish" { 
         ./publish.ps1
+    }
+    "serve" {
+        ./entry.ps1 publish
+        dotnet serve -d="./output/wwwroot"
     }
     Default {
         Write-Output "Invalid Command"

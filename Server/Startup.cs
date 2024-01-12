@@ -3,20 +3,17 @@ namespace Server;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-
-using Website.Localization.Api;
-using Website.Localization.Model;
-using Website.Metadata.Api;
-using Website.Metadata.State;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using MudBlazor.Services;
+using Website.Localization.Api;
+using Website.Localization.Model;
+using Website.Metadata.Api;
+using Website.Metadata.State;
 
 public class Startup
 {
@@ -36,6 +33,7 @@ public class Startup
         services.AddRazorPages();
 
         services
+            .AddScoped<PageScopedState, InMemoryPageScopedState>()
             .AddSingleton(
                 new PageMetadataSettings(new List<Assembly> { typeof(Website.Program).Assembly })
             )

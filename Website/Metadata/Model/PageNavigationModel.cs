@@ -1,7 +1,6 @@
 namespace Website.Metadata.Model;
 
 using System.Collections.Generic;
-
 using Website.Metadata.Api;
 
 public class PageNavigationModel : PageNavigation
@@ -13,4 +12,14 @@ public class PageNavigationModel : PageNavigation
     public bool IsFolder { get; set; }
     public IEnumerable<PageNavigation> Children => ChildrenAsList;
     public List<PageNavigationModel> ChildrenAsList { get; set; } = new List<PageNavigationModel>();
+
+    public IEnumerable<PageNavigation> Flatten()
+    {
+        var list = new List<PageNavigation> { this };
+        foreach (var child in ChildrenAsList)
+        {
+            list.AddRange(child.Flatten());
+        }
+        return list;
+    }
 }

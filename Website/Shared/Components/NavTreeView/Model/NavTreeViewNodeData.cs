@@ -11,5 +11,16 @@ public class NavTreeViewNodeData
     public string IconCssClass { get; set; } = string.Empty;
     public bool IsExpanded { get; set; }
     public bool IsDisabled { get; set; }
+    public string Route { get; set; } = string.Empty;
     public IList<NavTreeViewNodeData> Children { get; set; } = new List<NavTreeViewNodeData>();
+
+    public IEnumerable<NavTreeViewNodeData> Flatten()
+    {
+        var list = new List<NavTreeViewNodeData> { this };
+        foreach (var child in Children)
+        {
+            list.AddRange(child.Flatten());
+        }
+        return list;
+    }
 }

@@ -6,10 +6,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using Xunit;
 
 public class GenerateOutput : IClassFixture<AppTestFixture>

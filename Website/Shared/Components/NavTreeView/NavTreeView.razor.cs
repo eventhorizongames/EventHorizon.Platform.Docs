@@ -1,8 +1,7 @@
 namespace Website.Shared.Components.NavTreeView;
 
-using Website.Shared.Components.NavTreeView.Model;
-
 using Microsoft.AspNetCore.Components;
+using Website.Shared.Components.NavTreeView.Model;
 
 public class NavTreeViewModel : ComponentBase
 {

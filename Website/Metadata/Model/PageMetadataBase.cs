@@ -1,12 +1,10 @@
 namespace Website.Metadata.Model;
 
 using System.Reflection;
-
+using Microsoft.AspNetCore.Components;
 using Website.Localization;
 using Website.Localization.Api;
 using Website.Metadata.Api;
-
-using Microsoft.AspNetCore.Components;
 
 public class PageMetadataBase : ComponentBase, PageMetadata
 {
@@ -15,6 +13,9 @@ public class PageMetadataBase : ComponentBase, PageMetadata
 
     [Inject]
     public PageMetadataRepository Repository { get; set; } = null!;
+
+    [Inject]
+    public required PageScopedState ScopedState { get; set; }
 
     public PageMetadataModel PageMetadata { get; private set; } = new PageMetadataModel();
 
@@ -28,5 +29,6 @@ public class PageMetadataBase : ComponentBase, PageMetadata
             return;
         }
         PageMetadata = Repository.Get(route);
+        ScopedState.SetCurrentPage(PageMetadata);
     }
 }

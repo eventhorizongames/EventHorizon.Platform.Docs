@@ -10,4 +10,5 @@ public interface PageNavigation
     string Route { get; }
     bool IsFolder { get; }
     IEnumerable<PageNavigation> Children { get; }
+    public IEnumerable<PageNavigation> Flatten();
 }

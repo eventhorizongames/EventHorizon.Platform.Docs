@@ -1,0 +1,15 @@
+@inherits PagePaginationBase
+
+<div class="page-pagination">
+    <h2>Page Pagination</h2>
+
+    @if (PreviousPage is not null)
+    {
+        <a href="@PreviousPage.Route">Previous (@PreviousPage.Title) [@PreviousPage.Order]</a>
+    }
+
+    @if (NextPage is not null)
+    {
+        <a href="@NextPage.Route">(@NextPage.Title) [@NextPage.Order] Next</a>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿namespace Website.Localization.Model
 {
-    using Website.Localization.Api;
     using Microsoft.Extensions.Localization;
+    using Website.Localization.Api;
 
     public class StringBasedLocalizer<T> : Localizer<T>
     {

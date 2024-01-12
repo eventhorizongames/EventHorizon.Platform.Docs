@@ -21,20 +21,22 @@
     <MudMainContent>
         <MudContainer> @Body </MudContainer>
 
-            <MudContainer>
-                <footer style="text-align:center; padding: 3rem 0;">
-                    <div>@Localizer["All Rights Reserved"]</div>
-                    <div>
-                        <MudLink Href="https://ehzgames.studio/privacy-policy">@Localizer["Privacy Policy"]</MudLink> |
-                        <MudLink Href="https://ehzgames.studio/terms-of-service">@Localizer["Terms of Service"]</MudLink> |
-                        <MudLink Href="mailto:mail+docs@ehzgames.studio">@Localizer["Contact Us"]</MudLink>
-                    </div>
-                </footer>
-            </MudContainer>
-        </MudMainContent>
-    </MudLayout>
+        <PagePagination />
+        
+        <MudContainer>
+            <footer style="text-align:center; padding: 3rem 0;">
+                <div>@Localizer["All Rights Reserved"]</div>
+                <div>
+                    <MudLink Href="https://ehzgames.studio/privacy-policy">@Localizer["Privacy Policy"]</MudLink> |
+                    <MudLink Href="https://ehzgames.studio/terms-of-service">@Localizer["Terms of Service"]</MudLink> |
+                    <MudLink Href="mailto:mail+docs@ehzgames.studio">@Localizer["Contact Us"]</MudLink>
+                </div>
+            </footer>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
-    @code {
+@code {
     [Inject]
     public Localizer<SharedResource> Localizer { get; set; } =
     null!; bool _drawerOpen = true; void DrawerToggle()
